@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic Origami - Whale</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23FF6B81' stroke='white' stroke-width='2'%3E%3Cpath d='M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z'/%3E%3C/svg%3E"), auto !important; }
+        
+        body { font-family: 'Nunito', sans-serif; display: flex; min-height: 100vh; background-color: #FFF0F5; color: #4A4A4A; position: relative; overflow-x: hidden; }
+
+        /* HIASAN AWAN PINK TERAPUNG */
+        .cloud { position: absolute; background: white; border-radius: 50px; opacity: 0.7; z-index: 0; }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background: white; border-radius: 50%; }
+        .cloud1 { width: 100px; height: 30px; top: 8%; left: 8%; animation: floatCloud 15s linear infinite; }
+        .cloud1::before { width: 50px; height: 50px; top: -20px; left: 15px; }
+        .cloud2 { width: 150px; height: 40px; top: 25%; right: 5%; animation: floatCloud 20s linear infinite reverse; }
+        .cloud2::before { width: 70px; height: 70px; top: -30px; left: 20px; }
+        @keyframes floatCloud { 0% { transform: translateX(0); } 50% { transform: translateX(30px); } 100% { transform: translateX(0); } }
+
+        /* SIDEBAR KANAK-KANAK */
+        .sidebar { width: 260px; background: linear-gradient(180deg, #FF6B81 0%, #FF8A9C 100%); display: flex; flex-direction: column; box-shadow: 5px 0 20px rgba(255, 107, 129, 0.3); z-index: 10; position: fixed; height: 100vh; border-radius: 0 30px 30px 0; }
+        .logo-container { padding: 40px 20px 20px 20px; text-align: center; border-bottom: 3px dashed rgba(255,255,255,0.4); margin-bottom: 20px; animation: bounceLogo 2s infinite; cursor: pointer; }
+        @keyframes bounceLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .logo-svg { width: 80px; height: 80px; margin-bottom: 10px; filter: drop-shadow(0px 6px 0px rgba(0,0,0,0.1)); transition: transform 0.2s; }
+        .logo-container:active .logo-svg { transform: scale(0.9) rotate(15deg); }
+        .logo-text { color: white; font-family: 'Fredoka One', cursive; font-size: 1.8em; letter-spacing: 2px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-transform: uppercase; }
+        .sidebar a { color: white; text-decoration: none; padding: 18px 30px; font-family: 'Fredoka One', cursive; font-size: 1.1em; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border-left: 5px solid transparent; }
+        .sidebar a:hover { transform: scale(1.1) translateX(10px); color: #FFF0F5; }
+        .active-page { background-color: rgba(255,255,255,0.25); border-radius: 50px; margin: 0 15px; text-align: center; border-left: none !important; }
+
+        .main-content { margin-left: 260px; padding: 40px 60px; width: calc(100% - 260px); z-index: 5; }
+
+        /* LESSON NAV (GAMIFIED BUBBLE MENU) */
+        .lesson-nav { display: flex; gap: 15px; margin-bottom: 50px; background: white; padding: 15px; border-radius: 50px; border: 4px solid #FFD1DA; box-shadow: 0 10px 0 #FFF0F5; justify-content: center; flex-wrap: wrap; }
+        .lesson-nav a { padding: 12px 25px; color: #FF8A9C; text-decoration: none; font-family: 'Fredoka One', cursive; font-size: 1.1em; border-radius: 50px; transition: all 0.2s; border: 3px solid transparent; }
+        .lesson-nav a:hover { background: #FFF0F5; border-color: #FFB6C1; }
+        .lesson-nav a.active { background: #FF4757; color: white; border-color: #D93846; box-shadow: 0 5px 0 #D93846; transform: translateY(-3px); }
+        .lesson-nav a.active::after { display: none; } 
+
+        /* TAJUK TOPIK */
+        .topic-title { font-family: 'Fredoka One', cursive; font-size: 3.5em; color: #FF4757; margin-bottom: 10px; line-height: 1.2; text-shadow: 3px 3px 0 #FFD1DA; }
+        .topic-subtitle { font-size: 1.3em; color: #FF8A9C; font-weight: 700; margin-bottom: 40px; }
+
+        /* BINGKAI VIDEO SEPERTI TV KANAK-KANAK (PINK) */
+        .video-container-shape { background: #FF6B81; padding: 25px 25px 40px 25px; border-radius: 40px; border: 6px solid #D93846; box-shadow: 0 15px 0 #9E2632, inset 0 0 20px rgba(0,0,0,0.2); width: 100%; max-width: 900px; margin-bottom: 60px; position: relative; }
+        .video-container-shape::after { content: ''; position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 80px; height: 10px; background: rgba(0,0,0,0.2); border-radius: 10px; }
+        .video-container-shape video { width: 100%; max-height: 500px; object-fit: cover; border-radius: 20px; border: 4px solid #FFF0F5; background: #000; outline: none; display: block; }
+
+        /* STEPS SECTION */
+        .steps-section { display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: start; }
+        .steps-title { font-family: 'Fredoka One', cursive; font-size: 2.2em; color: #FF4757; margin-bottom: 30px; text-shadow: 2px 2px 0 #FFF0F5; }
+        
+        /* BUBBLE LIST PINK TONE */
+        .steps-list { display: flex; flex-direction: column; gap: 20px; counter-reset: step-counter; }
+        .step-item { display: flex; align-items: center; background: #FFF0F5; padding: 15px 20px; border-radius: 25px; border: 3px solid #FFD1DA; font-weight: 700; font-size: 1.1em; color: #FF4757; transition: transform 0.2s; line-height: 1.5; }
+        .step-item:hover { transform: scale(1.02); background: white; border-color: #FF6B81; }
+        .step-item::before { counter-increment: step-counter; content: counter(step-counter); width: 45px; height: 45px; background: #FF6B81; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 1.3em; margin-right: 15px; flex-shrink: 0; border: 3px solid white; box-shadow: 0 4px 0 #D93846; }
+        
+        /* GAMBAR FOTO (PINK DASHED) */
+        .diagram-container-shape { background: white; padding: 15px; border-radius: 30px; border: 5px dashed #FF6B81; transform: rotate(2deg); box-shadow: 0 10px 0 #FFD1DA; transition: transform 0.3s; }
+        .diagram-container-shape:hover { transform: rotate(0deg) scale(1.03); }
+        .diagram-container-shape img { width: 100%; border-radius: 20px; display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <div class="sidebar">
+        <div class="logo-container">
+            <svg class="logo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M32 2L2 28l14 8 16-12 16 12 14-8z"/><path fill="#FFF0F5" d="M16 36l16-12v38z"/><path fill="#FFE4E1" d="M48 36l-16-12v38z"/><path fill="#FFC0CB" d="M2 28l14 8 0 20z"/><path fill="#FFB6C1" d="M62 28l-14 8 0 20z"/></svg>
+            <div class="logo-text">Folded</div>
+        </div>
+        <a href="index.html">Home</a>
+        <a href="lesson.html" class="active-page">Lesson</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="about.html">About Us</a>
+        <a href="help.html">Help</a>
+    </div>
+
+    <div class="main-content">
+        <nav class="lesson-nav">
+            <a href="lesson.html">Introduction</a>
+            <a href="lesson-basic.html" class="active">Topic 1: Basic</a>
+            <a href="lesson-easy.html">Topic 2: Easy</a>
+            <a href="lesson-intermediate.html">Topic 3: Intermediate</a>
+        </nav>
+
+        <h1 class="topic-title">The Whale</h1>
+        <p class="topic-subtitle">Master the foundational folding techniques by creating this elegant sea creature.</p>
+
+        <div class="video-container-shape">
+            <video controls>
+                <source src="whale.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="steps-section">
+            <div class="instructions-col">
+                <h2 class="steps-title">Step-by-Step Instructions</h2>
+                <div class="steps-list">
+                    <div class="step-item">Fold a square paper diagonally to make a crease, then unfold it.</div>
+                    <div class="step-item">Fold the top and bottom edges inward to meet the center line.</div>
+                    <div class="step-item">Fold the left point inward to round out the whale's head.</div>
+                    <div class="step-item">Fold the entire model in half along the center line securely.</div>
+                    <div class="step-item">Using scissors, make a small horizontal cut at the thin tail end.</div>
+                    <div class="step-item">Fold the cut sections upward and outward to form the tail fins.</div>
+                </div>
+            </div>
+            <div class="visual-col">
+                <div class="diagram-container-shape">
+                    <img src="origami1.jpg" alt="Whale Origami Diagram">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz - Origami Course</title>
+    <style>
+        /* Menggunakan fon kanak-kanak yang comel dan tebal */
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23FF6B81' stroke='white' stroke-width='2'%3E%3Cpath d='M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z'/%3E%3C/svg%3E"), auto !important; }
+        
+        body { font-family: 'Nunito', sans-serif; display: flex; min-height: 100vh; background-color: #FFF0F5; color: #4A4A4A; position: relative; overflow-x: hidden; }
+
+        /* HIASAN AWAN PINK TERAPUNG */
+        .cloud { position: absolute; background: white; border-radius: 50px; opacity: 0.7; z-index: 0; }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background: white; border-radius: 50%; }
+        .cloud1 { width: 100px; height: 30px; top: 5%; left: 30%; animation: floatCloud 15s linear infinite; }
+        .cloud1::before { width: 50px; height: 50px; top: -20px; left: 15px; }
+        .cloud2 { width: 150px; height: 40px; top: 15%; right: 5%; animation: floatCloud 20s linear infinite reverse; }
+        .cloud2::before { width: 70px; height: 70px; top: -30px; left: 20px; }
+        @keyframes floatCloud { 0% { transform: translateX(0); } 50% { transform: translateX(30px); } 100% { transform: translateX(0); } }
+
+        /* SIDEBAR KANAK-KANAK (PINK THEME) */
+        .sidebar { width: 260px; background: linear-gradient(180deg, #FF6B81 0%, #FF8A9C 100%); display: flex; flex-direction: column; box-shadow: 5px 0 20px rgba(255, 107, 129, 0.3); z-index: 10; position: fixed; height: 100vh; border-radius: 0 30px 30px 0; }
+        .logo-container { padding: 40px 20px 20px 20px; text-align: center; border-bottom: 3px dashed rgba(255,255,255,0.4); margin-bottom: 20px; animation: bounceLogo 2s infinite; cursor: pointer; }
+        @keyframes bounceLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .logo-svg { width: 80px; height: 80px; margin-bottom: 10px; filter: drop-shadow(0px 6px 0px rgba(0,0,0,0.1)); transition: transform 0.2s; }
+        .logo-container:active .logo-svg { transform: scale(0.9) rotate(15deg); }
+        .logo-text { color: white; font-family: 'Fredoka One', cursive; font-size: 1.8em; letter-spacing: 2px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-transform: uppercase; }
+        .sidebar a { color: white; text-decoration: none; padding: 18px 30px; font-family: 'Fredoka One', cursive; font-size: 1.1em; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border-left: 5px solid transparent; }
+        .sidebar a:hover { transform: scale(1.1) translateX(10px); color: #FFF0F5; }
+        .active-page { background-color: rgba(255,255,255,0.25); border-radius: 50px; margin: 0 15px; text-align: center; border-left: none !important; }
+
+        /* MAIN CONTENT */
+        .main-content { margin-left: 260px; padding: 60px 80px; width: calc(100% - 260px); z-index: 5; }
+        
+        /* HEADER KUIZ (KOTAK 3D PINK) */
+        .quiz-header { background: white; padding: 25px 40px; border-radius: 30px; border: 4px solid #FF4757; box-shadow: 0 10px 0 #D93846; margin-bottom: 50px; text-align: center; }
+        .quiz-header h1 { font-family: 'Fredoka One', cursive; color: #FF4757; font-size: 3.5em; margin-bottom: 10px; text-shadow: 2px 2px 0 #FFD1DA; line-height: 1.2; }
+        .quiz-header p { font-size: 1.2em; color: #FF8A9C; font-weight: 700; margin: 0; }
+
+        /* GAYA SOALAN (KAD GAMIFIED) */
+        .quiz-form { max-width: 900px; margin: 0 auto; }
+        .quiz-question { background: white; padding: 30px; border-radius: 30px; border: 4px solid #FF8A9C; box-shadow: 0 10px 0 #FF6B81; margin-bottom: 40px; transition: transform 0.3s; }
+        .quiz-question:hover { transform: translateY(-5px); border-color: #FF4757; }
+        .quiz-question h3 { font-family: 'Fredoka One', cursive; font-size: 1.5em; color: #FF4757; margin-bottom: 20px; line-height: 1.5; }
+        
+        /* GAMBAR DI DALAM SOALAN (DASHED PINK BORDER) */
+        .question-img { width: 100%; max-width: 500px; height: auto; border-radius: 20px; border: 4px dashed #FFB6C1; margin-bottom: 25px; display: block; margin-left: auto; margin-right: auto; box-shadow: 0 5px 0 #FFD1DA; }
+
+        /* GRID JAWAPAN BIASA (TEKS) */
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .option-label { display: flex; align-items: center; padding: 15px 20px; background: #FFF0F5; border: 3px solid #FFD1DA; border-radius: 15px; font-weight: 700; font-size: 1.1em; color: #FF4757; cursor: pointer; transition: all 0.2s; }
+        .option-label:hover { background: white; border-color: #FF6B81; transform: scale(1.02); }
+        .option-label input[type="radio"] { margin-right: 15px; transform: scale(1.5); accent-color: #FF4757; cursor: pointer; }
+
+        /* GRID JAWAPAN BERGAMBAR */
+        .options-grid-pic { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .option-img-label { display: flex; flex-direction: column; align-items: center; padding: 15px; background: #FFF0F5; border: 3px solid #FFD1DA; border-radius: 20px; font-weight: 700; color: #FF4757; cursor: pointer; transition: all 0.2s; }
+        .option-img-label:hover { background: white; border-color: #FF6B81; transform: translateY(-5px); box-shadow: 0 8px 0 #FFD1DA; }
+        .option-img-label img { width: 100%; height: 100px; object-fit: contain; margin: 10px 0; border-radius: 12px; border: 2px solid #FFB6C1; }
+        .option-img-label input[type="radio"] { transform: scale(1.5); accent-color: #FF4757; cursor: pointer; }
+
+        /* BUTANG SUBMIT (GAMIFIED) */
+        .submit-btn { display: block; width: 100%; max-width: 400px; margin: 0 auto; background: #FF4757; color: white; font-family: 'Fredoka One', cursive; font-size: 1.5em; padding: 20px; border: 4px solid #D93846; border-radius: 50px; box-shadow: 0 10px 0 #D93846; cursor: pointer; transition: all 0.2s; text-align: center; margin-top: 50px; text-transform: uppercase; }
+        .submit-btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 0 #D93846; background: #FF6B81; }
+        .submit-btn:active { transform: translateY(10px); box-shadow: 0 0 0 #D93846; }
+
+        /* ========================================== */
+        /* GAYA POPUP MODAL (KEPUTUSAN KUIZ)          */
+        /* ========================================== */
+        .modal-overlay {
+            display: none; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 182, 193, 0.8); /* Latar belakang pink gelap sikit */
+            z-index: 1000; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: #ffffff; padding: 50px; border-radius: 40px; text-align: center;
+            max-width: 500px; width: 90%; 
+            border: 6px solid #FF4757; box-shadow: 0 20px 0 #D93846;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .modal-content h2 { font-family: 'Fredoka One', cursive; font-size: 4.5em; margin-bottom: 10px; line-height: 1; color: #FF4757; }
+        .modal-content p { font-size: 1.4em; font-weight: 700; color: #FF6B81; margin-bottom: 40px; }
+
+        /* Butang Tutup Popup */
+        .close-modal-btn {
+            background: #FF4757; color: white; padding: 15px 40px; border: none;
+            border-radius: 50px; border: 4px solid #D93846; box-shadow: 0 8px 0 #D93846; 
+            font-family: 'Fredoka One', cursive; font-size: 1.3em; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+        }
+        .close-modal-btn:hover { background: #FF6B81; transform: translateY(-3px); box-shadow: 0 11px 0 #D93846; }
+        .close-modal-btn:active { transform: translateY(8px); box-shadow: 0 0 0 #D93846; }
+
+    </style>
+</head>
+<body>
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <div class="sidebar">
+        <div class="logo-container">
+            <svg class="logo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M32 2L2 28l14 8 16-12 16 12 14-8z"/><path fill="#FFF0F5" d="M16 36l16-12v38z"/><path fill="#FFE4E1" d="M48 36l-16-12v38z"/><path fill="#FFC0CB" d="M2 28l14 8 0 20z"/><path fill="#FFB6C1" d="M62 28l-14 8 0 20z"/></svg>
+            <div class="logo-text">Folded</div>
+        </div>
+        <a href="index.html">Home</a>
+        <a href="lesson.html">Lesson</a>
+        <a href="quiz.html" class="active-page">Quiz</a>
+        <a href="about.html">About Us</a>
+        <a href="help.html">Help</a>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="quiz-header">
+            <h1>Let's Start the Quiz!</h1>
+            <p>Test your knowledge! Answer the 10 questions below based on the origami lessons.</p>
+        </div>
+
+        <form class="quiz-form" id="quizForm">
+            
+            <div class="quiz-question">
+                <h3>1. What is Origami?</h3>
+                <img src="origami.jpg" class="question-img" alt="Origami Concept">
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q1" value="A"> A painting activity</label>
+                    <label class="option-label"><input type="radio" name="q1" value="B"> A paper folding art</label>
+                    <label class="option-label"><input type="radio" name="q1" value="C"> A singing activity</label>
+                    <label class="option-label"><input type="radio" name="q1" value="D"> A clay activity</label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>2. What material do we need to make origami?</h3>
+                <div class="options-grid-pic">
+                    <label class="option-img-label">
+                        <input type="radio" name="q2" value="A">
+                        <img src="paper.jpg" alt="Paper">
+                        <span>Paper</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q2" value="B">
+                        <img src="spoon.jpg" alt="Spoon">
+                        <span>Spoon</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q2" value="C">
+                        <img src="eraser.jpg" alt="Eraser">
+                        <span>Eraser</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q2" value="D">
+                        <img src="marker.jpg" alt="Marker Pen">
+                        <span>Marker Pen</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>3. What should you do FIRST before making an origami animal?</h3>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q3" value="A"> Tear the paper</label>
+                    <label class="option-label"><input type="radio" name="q3" value="B"> Fold the paper carefully</label>
+                    <label class="option-label"><input type="radio" name="q3" value="C"> Throw the paper</label>
+                    <label class="option-label"><input type="radio" name="q3" value="D"> Colour the paper</label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>4. Which origami shape has long ears?</h3>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q4" value="A"> Whale</label>
+                    <label class="option-label"><input type="radio" name="q4" value="B"> Crab</label>
+                    <label class="option-label"><input type="radio" name="q4" value="C"> Rabbit</label>
+                    <label class="option-label"><input type="radio" name="q4" value="D"> Butterfly</label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>5. Which origami shape can fly?</h3>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q5" value="A"> Rabbit</label>
+                    <label class="option-label"><input type="radio" name="q5" value="B"> Butterfly</label>
+                    <label class="option-label"><input type="radio" name="q5" value="C"> Whale</label>
+                    <label class="option-label"><input type="radio" name="q5" value="D"> Crab</label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>6. Which origami shape lives in the sea?</h3>
+                <img src="sea.jpg" class="question-img" alt="Ocean">
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q6" value="A"> Whale</label>
+                    <label class="option-label"><input type="radio" name="q6" value="B"> Rabbit</label>
+                    <label class="option-label"><input type="radio" name="q6" value="C"> Butterfly</label>
+                    <label class="option-label"><input type="radio" name="q6" value="D"> Bird</label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>7. Which origami shape walks sideways?</h3>
+                <div class="options-grid-pic">
+                    <label class="option-img-label">
+                        <input type="radio" name="q7" value="A">
+                        <img src="rabbit1.jpg" alt="Rabbit">
+                        <span>Rabbit</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q7" value="B">
+                        <img src="butterfly1.jpg" alt="Butterfly">
+                        <span>Butterfly</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q7" value="C">
+                        <img src="whale1.jpg" alt="Whale">
+                        <span>Whale</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q7" value="D">
+                        <img src="crab1.jpg" alt="Crab">
+                        <span>Crab</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>8. Why should we follow the origami steps in order?</h3>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q8" value="A"> To make the shape correctly</label>
+                    <label class="option-label"><input type="radio" name="q8" value="B"> To finish slowly</label>
+                    <label class="option-label"><input type="radio" name="q8" value="C"> To waste paper</label>
+                    <label class="option-label"><input type="radio" name="q8" value="D"> To make mistakes</label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>9. Which part of your body helps you fold origami carefully?</h3>
+                <div class="options-grid-pic">
+                    <label class="option-img-label">
+                        <input type="radio" name="q9" value="A">
+                        <img src="feet.jpeg" alt="Feet">
+                        <span>Feet</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q9" value="B">
+                        <img src="handeyes.png" alt="handeyes">
+                        <span>Hand & Eyes</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q9" value="C">
+                        <img src="ears.png" alt="ears">
+                        <span>Ears</span>
+                    </label>
+                    <label class="option-img-label">
+                        <input type="radio" name="q9" value="D">
+                        <img src="nose.jpg" alt="nose">
+                        <span>Nose</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h3>10. Why is it important to follow the guide step by step?</h3>
+                <div class="options-grid">
+                    <label class="option-label"><input type="radio" name="q10" value="A"> To make it harder</label>
+                    <label class="option-label"><input type="radio" name="q10" value="B"> To make the paper dirty</label>
+                    <label class="option-label"><input type="radio" name="q10" value="C"> To waste time</label>
+                    <label class="option-label"><input type="radio" name="q10" value="D"> To make the origami shape correctly</label>
+                </div>
+            </div>
+
+            <button type="button" class="submit-btn" onclick="calculateScore()">Submit Answers</button>
+            
+        </form>
+    </div>
+
+    <div id="result-modal" class="modal-overlay">
+        <div class="modal-content" id="modal-box">
+            <h2 id="score-text">0 / 10</h2>
+            <p id="feedback-text">Complete the quiz to see your results.</p>
+            <button class="close-modal-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function calculateScore() {
+            let score = 0;
+            const answers = { q1: "B", q2: "A", q3: "B", q4: "C", q5: "B", q6: "A", q7: "D", q8: "A", q9: "B", q10: "D" };
+            
+            // Kira markah
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && selected.value === answers[`q${i}`]) {
+                    score++;
+                }
+            }
+            
+            // Dapatkan elemen popup
+            const modalOverlay = document.getElementById("result-modal");
+            const modalBox = document.getElementById("modal-box");
+            const scoreText = document.getElementById("score-text");
+            const feedbackText = document.getElementById("feedback-text");
+            
+            scoreText.innerText = score + " / 10";
+            
+            // Ubah gaya UI berdasarkan markah (teks tak ditukar, cuma warna gaya gamified)
+            if(score === 10) {
+                scoreText.style.color = "#10b981"; // Hijau
+                feedbackText.innerText = "Outstanding! You are an Origami Master!";
+                modalBox.style.borderColor = "#10b981";
+                modalBox.style.boxShadow = "0 15px 0 #059669";
+            } else if(score >= 7) {
+                scoreText.style.color = "#FFA502"; // Oren
+                feedbackText.innerText = "Great job! You have a solid understanding of origami.";
+                modalBox.style.borderColor = "#FFA502"; 
+                modalBox.style.boxShadow = "0 15px 0 #E69300";
+            } else {
+                scoreText.style.color = "#FF6B81"; // Merah/Pink
+                feedbackText.innerText = "Keep practicing! Review the lessons and try again.";
+                modalBox.style.borderColor = "#FF6B81"; 
+                modalBox.style.boxShadow = "0 15px 0 #D93846";
+            }
+
+            // Paparkan popup (gunakan flex untuk center)
+            modalOverlay.style.display = "flex";
+        }
+
+        // Fungsi untuk tutup popup
+        function closeModal() {
+            document.getElementById("result-modal").style.display = "none";
+        }
+    </script>
+</body>
+</html>

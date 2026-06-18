@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Learn Origami Basics</title>
+    <style>
+        /* This section changes the colors and layout */
+        body {
+            background-color: skyblue; 
+            font-family: Arial, sans-serif;
+        }
+        
+        .content-box {
+            background-color: white; 
+            width: 80%;
+            margin: 20px auto; 
+            padding: 20px;
+            border-radius: 10px; 
+        }
+
+        nav {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: skyblue;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0 15px; /* Adds space between menu words */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="lesson.html">Lesson</a>
+        <a href="videos.html">Videos</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="about.html">About Us</a>
+    </nav>
+
+    <div class="content-box">
+        <h1>Welcome to Our Origami Course!</h1>
+        
+        <p>Origami is the beautiful art of paper folding. In this course, we will teach you how to make amazing shapes out of a single piece of paper.</p>
+        
+        <h2>What You Will Need:</h2>
+        <ul>
+            <li>Square origami paper</li>
+            <li>A flat surface</li>
+            <li>Patience and creativity</li>
+        </ul>
+    </div>
+
+</body>
+</html>

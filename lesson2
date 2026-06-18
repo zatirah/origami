@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rabbit Lesson - Origami Course</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23FFB6C1' stroke='black' stroke-width='1'%3E%3Cpath d='M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z'/%3E%3C/svg%3E"), auto !important;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background-color: #FFF0F5; 
+            color: #334155;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #FFC0CB 0%, #FFB6C1 100%);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+            z-index: 10;
+            position: fixed; 
+            height: 100vh;
+        }
+
+        .logo-container {
+            padding: 40px 20px 20px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            margin-bottom: 20px;
+        }
+
+        .logo-svg { width: 80px; height: 80px; margin-bottom: 10px; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1)); }
+        .logo-text { color: white; font-size: 1.5em; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+        .sidebar a {
+            color: white; text-decoration: none; padding: 16px 30px;
+            font-weight: 600; font-size: 1.1em; transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+
+        .sidebar a:hover { background-color: rgba(255,255,255,0.2); border-left: 5px solid white; padding-left: 35px; }
+        .active-page { background-color: rgba(255,255,255,0.2); border-left: 5px solid white !important; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 260px; 
+            padding: 60px;
+            width: calc(100% - 260px);
+        }
+
+        /* BACK BUTTON */
+        .back-btn {
+            display: inline-block;
+            background: #FFB6C1; color: white; padding: 10px 20px;
+            text-decoration: none; font-weight: 600; border-radius: 8px;
+            margin-bottom: 30px; transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: #FF91A4; transform: translateX(-5px); }
+
+        /* LESSON CARD */
+        .lesson-card {
+            background: white; padding: 40px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 8px solid #FFB6C1;
+            display: flex; gap: 40px;
+        }
+
+        .lesson-text { flex: 1; }
+        .lesson-text h1 { font-size: 2.5em; color: #0f172a; margin-bottom: 10px; }
+        .lesson-text p { color: #64748b; margin-bottom: 25px; line-height: 1.6; font-size: 1.1em; }
+        
+        .lesson-text ul { list-style-type: none; padding: 0; }
+        .lesson-text li {
+            background: #FFF0F5; margin-bottom: 12px; padding: 15px;
+            border-radius: 8px; color: #334155; font-weight: 500;
+            border-left: 5px solid #FF91A4;
+        }
+
+        .lesson-video { flex: 1; }
+        video { width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); outline: none; }
+        .diagram-img { width: 100%; border-radius: 12px; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo-container">
+            <svg class="logo-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#ffffff" d="M32 2L2 28l14 8 16-12 16 12 14-8z"/>
+                <path fill="#FFF0F5" d="M16 36l16-12v38z"/>
+                <path fill="#FFE4E1" d="M48 36l-16-12v38z"/>
+                <path fill="#FFC0CB" d="M2 28l14 8 0 20z"/>
+                <path fill="#FFB6C1" d="M62 28l-14 8 0 20z"/>
+            </svg>
+            <div class="logo-text">Folded</div>
+        </div>
+        <a href="index.html">Home</a>
+        <a href="lesson.html" class="active-page">Lesson</a>
+        <a href="videos.html">Videos</a>
+        <a href="about.html">About Us</a>
+    </div>
+
+    <div class="main-content">
+        
+        <a href="lesson.html" class="back-btn">← Back to Menu</a>
+
+        <div class="lesson-card">
+            
+            <div class="lesson-text">
+                <h1>How to Fold a Rabbit</h1>
+                <p>Create a charming origami rabbit. This simple design features tall ears and a cute face.</p>
+                <ul>
+                    <li><strong>Step 1:</strong> Start with a square paper. Fold it in half diagonally and unfold to make a crease.</li>
+                    <li><strong>Step 2:</strong> Fold the top and bottom outer edges into the center crease to make a Kite base.</li>
+                    <li><strong>Step 3:</strong> Fold the right point over to the left side.</li>
+                    <li><strong>Step 4:</strong> Fold the tip of that point slightly back to the right.</li>
+                    <li><strong>Step 5:</strong> Turn the model over.</li>
+                    <li><strong>Step 6:</strong> Fold the top point backward.</li>
+                    <li><strong>Step 7:</strong> Fold the entire model in half horizontally.</li>
+                    <li><strong>Step 8:</strong> Gently pull the ears up and flatten the head to shape your rabbit.</li>
+                </ul>
+            </div>
+
+            <div class="lesson-video">
+                <video controls>
+                    <source src="video2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <img src="origami2.jpg" alt="Rabbit Instructions" class="diagram-img">
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
